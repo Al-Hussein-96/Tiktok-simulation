@@ -1,0 +1,76 @@
+[
+  {
+    "_id": "61a5eda1dd1b402ee06a7859",
+    "media_base_url": "https://shaadoow.net/",
+    "recording_details": {
+      "duration": 35.233333333333334,
+      "cover_img_url": "recording/cover_image/7ll9hnMobFR12EjGph2b6z2O1N3wrhKmpn7gH6lZ.jpg",
+      "type": "6",
+      "description": "",
+      "recording_url": "recording/video/vRP8OcKzFBM85q0OrLUpqsPxJkdiUiXLmVRfSylH.mov",
+      "status": 1,
+      "recording_id": 194800,
+      "streaming_hls": "https://stream.mux.com/X01er47n02kI34Cu7HU3RVic6NwZ8K00A52qM0001Pr5e7ds.m3u8"
+    }
+  },
+  {
+    "_id": "603135ba84e6f01cb23f4822",
+    "media_base_url": "https://shaadoow.net/",
+
+    "recording_details": {
+      "type": "2",
+      "duration": 71.83233560090703,
+      "description": "I sing with Ali Jassim واصل بدونك مرحله حاله جنون وبهذله مع المبدع الفنان / علي جاسم",
+      "cover_img_url": "recording/cover_image/kdAR5K5ooISBebgUqKlww3KZ6JtuyeeRX8FCzfFt.jpeg",
+      "recording_url": "recording/video/xSUut9RUy9E8sciseKvVueGTUNrnb1bszRasqN92.mp4",
+      "status": 1,
+      "recording_id": 98886,
+      "streaming_hls": "https://stream.mux.com/iiolaL6hrnWjg3evPTULqPwSjl6akbJmnquvCGuZsLI.m3u8"
+    }
+  },
+  {
+    "_id": "61a5ed3bf342bf115f3ea87c",
+    "media_base_url": "https://shaadoow.net/",
+
+    "recording_details": {
+      "duration": 15,
+      "cover_img_url": "recording/cover_image/cSiC4nts05rOn81uusOBgKaq0Q2maB585ixBxg8P.jpg",
+      "type": "6",
+      "description": "",
+      "recording_url": "recording/video/SyXZriAZcaN0AXk8OzEhRo5IAbmAruu4qMmgELjM.mov",
+      "status": 1,
+      "recording_id": 194799,
+      "streaming_hls": "https://stream.mux.com/5ctyMU022AaQtvtmguHK01KzoVhVTWX2p5SOaGzvdJ9Vg.m3u8"
+    }
+  },
+  {
+    "_id": "61a5e5b197f95064a0581d22",
+    "media_base_url": "https://shaadoow.net/",
+
+    "recording_details": {
+      "duration": 14.4669921875,
+      "cover_img_url": "recording/cover_image/AgM6fHdC6csU26tiIEJRbu6FRYUaWHgfXWCGNJo3.jpg",
+      "type": "6",
+      "description": "",
+      "recording_url": "recording/video/FpJugSSaxTnWjWueS75mZewYweRveT9ZXYX3vwNI.mov",
+      "status": 1,
+      "recording_id": 194798,
+      "streaming_hls": "https://stream.mux.com/WzuGs8DZBr3k8ZOZYqZNqY3vmymTG3xNotgT8sKhRFk.m3u8"
+    }
+  },
+  {
+    "_id": "61a5e559f342bf115f3ea87b",
+    "media_base_url": "https://shaadoow.net/",
+
+    "recording_details": {
+      "duration": 21.4,
+      "cover_img_url": "recording/cover_image/jj9Bmh9vwJvDKyKLFjLdstJqI3WW35FppuZVLVDY.jpg",
+      "type": "6",
+      "description": "",
+      "recording_url": "recording/video/EKBbcl833suIDNtHDez2EZ0V87uAE8WYk7ywi1JU.mov",
+      "status": 1,
+      "recording_id": 194797,
+      "streaming_hls": "https://stream.mux.com/y2tMUZmZwKMPoP1c5MRYmOePtbEL1YfZf01srEUfvris.m3u8"
+    }
+  }
+]
