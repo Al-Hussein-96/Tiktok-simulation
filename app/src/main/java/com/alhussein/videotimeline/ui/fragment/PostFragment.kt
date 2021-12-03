@@ -1,5 +1,6 @@
 package com.alhussein.videotimeline.ui.fragment
 
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
@@ -12,9 +13,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.alhussein.videotimeline.App
+import com.alhussein.videotimeline.BuildConfig
 import com.alhussein.videotimeline.R
+import com.alhussein.videotimeline.download.DownloadResult
+import com.alhussein.videotimeline.download.downloadFile
 import com.alhussein.videotimeline.model.PostModel
 import com.alhussein.videotimeline.utils.Constants
 import com.alhussein.videotimeline.viewmodel.TimeLineViewModel
@@ -27,7 +34,14 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.util.Util
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.layout_post_view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 
@@ -85,35 +99,17 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
 
         image_view_option_share.setOnClickListener {
-            val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(postUrl))
-            request.setDescription("A zip package with some files")
-            request.setTitle("Zip package")
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//            request.allowScanningByMediaScanner()
 
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"test.mp4")
+            val bundle = bundleOf("post_url" to postUrl)
 
-            println("Mohammad " + requireActivity().filesDir.absolutePath)
+            it.findNavController().navigate(R.id.action_timeLineFragment_to_trimFragment,bundle)
 
-
-
-            println(
-                "MainActivity: " +
-                        "download folder>>>>" + requireActivity().filesDir.absolutePath
-            )
-
-            // get download service and enqueue file
-
-            // get download service and enqueue file
-            val manager: DownloadManager =
-                requireActivity().getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-
-            manager.enqueue(request)
-
+//                downloadWithKtor(postUrl!!)
         }
 
 
     }
+
 
     override fun onPause() {
         pauseVideo()

@@ -9,5 +9,21 @@
         android:id="@+id/timeLineFragment"
         android:name="com.alhussein.videotimeline.ui.fragment.TimeLineFragment"
         android:label="fragment_time_line"
-        tools:layout="@layout/fragment_time_line" />
+        tools:layout="@layout/fragment_time_line" >
+        <action
+            android:id="@+id/action_timeLineFragment_to_trimFragment"
+
+            app:destination="@id/trimFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trimFragment"
+        android:name="com.alhussein.videotimeline.ui.fragment.TrimFragment"
+        android:label="fragment_trim"
+
+        tools:layout="@layout/fragment_trim" >
+        <argument
+            android:name="post_url"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

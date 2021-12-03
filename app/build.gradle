@@ -63,8 +63,13 @@ dependencies {
 
     implementation "androidx.work:work-runtime-ktx:2.4.0-beta01"
 
+//    implementation 'com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS'
+//    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
 
-    implementation 'com.mindorks.android:prdownloader:0.6.0'
+
+//    implementation 'com.github.waynell:VideoRangeSlider:1.0.1'
+
+
 
     implementation "io.ktor:ktor-client-android:1.2.5"
 
