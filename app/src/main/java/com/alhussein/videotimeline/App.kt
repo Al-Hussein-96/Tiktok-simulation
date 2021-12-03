@@ -2,6 +2,7 @@ package com.alhussein.videotimeline
 
 import android.app.Application
 import android.content.Context
+import com.downloader.PRDownloader
 import com.google.android.exoplayer2.database.DatabaseProvider
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
@@ -26,6 +27,9 @@ class App: Application() {
         if (simpleCache == null) {
             simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, databaseProvider)
         }
+
+
+        PRDownloader.initialize(applicationContext)
 
     }
 }

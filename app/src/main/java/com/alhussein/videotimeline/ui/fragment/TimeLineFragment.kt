@@ -1,10 +1,13 @@
 package com.alhussein.videotimeline.ui.fragment
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.work.Data
@@ -12,13 +15,21 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.adapter.PostsAdapter
+import com.alhussein.videotimeline.download.DownloadResult
+import com.alhussein.videotimeline.download.downloadFile
 import com.alhussein.videotimeline.model.PostModel
 import com.alhussein.videotimeline.model.ResultData
 import com.alhussein.videotimeline.utils.Constants
 import com.alhussein.videotimeline.viewmodel.TimeLineViewModel
 import com.alhussein.videotimeline.work.PreCachingService
 import dagger.hilt.android.AndroidEntryPoint
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.fragment_time_line.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
@@ -63,6 +74,7 @@ class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
         WorkManager.getInstance(requireContext())
             .enqueue(preCachingWork)
     }
+
 
 
 }

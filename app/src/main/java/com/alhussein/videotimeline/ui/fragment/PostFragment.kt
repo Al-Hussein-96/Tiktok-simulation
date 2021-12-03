@@ -1,11 +1,17 @@
 package com.alhussein.videotimeline.ui.fragment
 
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Context.DOWNLOAD_SERVICE
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
 import com.alhussein.videotimeline.App
 import com.alhussein.videotimeline.R
@@ -22,7 +28,7 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import kotlinx.android.synthetic.main.layout_post_view.*
-
+import java.io.File
 
 
 class PostFragment : Fragment(R.layout.fragment_post) {
@@ -34,8 +40,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     private var cacheDataSourceFactory: CacheDataSourceFactory? = null
 
     private var toPlayVideoPosition: Int = -1
-
-    private val viewModel by activityViewModels<TimeLineViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,15 +62,18 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
     private fun prepareVideoPlayer() {
         simplePlayer = ExoPlayerFactory.newSimpleInstance(context)
-        cacheDataSourceFactory = CacheDataSourceFactory(simpleCache,
+        cacheDataSourceFactory = CacheDataSourceFactory(
+            simpleCache,
             DefaultHttpDataSourceFactory(
-                Util.getUserAgent(context,
-                    "exo"))
+                Util.getUserAgent(
+                    context,
+                    "exo"
+                )
+            )
         )
     }
 
     private fun setData() {
-
 
 
         val simplePlayer = getPlayer()
@@ -74,7 +81,40 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
         postUrl = postsDataModel?.media_base_url + postsDataModel?.recording_details?.recording_url
         postUrl?.let { prepareMedia(it) }
+
+
+
+        image_view_option_share.setOnClickListener {
+            val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(postUrl))
+            request.setDescription("A zip package with some files")
+            request.setTitle("Zip package")
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//            request.allowScanningByMediaScanner()
+
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,"test.mp4")
+
+            println("Mohammad " + requireActivity().filesDir.absolutePath)
+
+
+
+            println(
+                "MainActivity: " +
+                        "download folder>>>>" + requireActivity().filesDir.absolutePath
+            )
+
+            // get download service and enqueue file
+
+            // get download service and enqueue file
+            val manager: DownloadManager =
+                requireActivity().getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+
+            manager.enqueue(request)
+
+        }
+
+
     }
+
     override fun onPause() {
         pauseVideo()
         super.onPause()
@@ -113,7 +153,8 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
         val uri = Uri.parse(linkUrl)
 
-        val mediaSource = ProgressiveMediaSource.Factory(cacheDataSourceFactory).createMediaSource(uri)
+        val mediaSource =
+            ProgressiveMediaSource.Factory(cacheDataSourceFactory).createMediaSource(uri)
 
         simplePlayer?.prepare(mediaSource, true, true)
         simplePlayer?.repeatMode = Player.REPEAT_MODE_ONE
@@ -123,7 +164,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         toPlayVideoPosition = -1
     }
 
-    private val playerCallback: Player.EventListener? = object: Player.EventListener {
+    private val playerCallback: Player.EventListener? = object : Player.EventListener {
         override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
 //            logError("onPlayerStateChanged playbackState: $playbackState")
         }
@@ -132,7 +173,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
             super.onPlayerError(error)
         }
     }
-
 
 
     companion object {
