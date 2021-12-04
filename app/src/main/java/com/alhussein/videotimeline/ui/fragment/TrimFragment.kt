@@ -11,7 +11,7 @@ import com.alhussein.videotimeline.BuildConfig
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.download.DownloadResult
 import com.alhussein.videotimeline.download.downloadFile
-import com.alhussein.videotimeline.model.PostModel
+import com.alhussein.videotimeline.model.Post
 import com.bumptech.glide.Glide
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
@@ -22,15 +22,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import kotlinx.android.synthetic.main.fragment_trim.*
-import java.util.*
-import android.app.ProgressDialog
-import com.alhussein.videotimeline.utils.RealPath
 
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_CANCEL
 
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS
-
-import com.arthenica.mobileffmpeg.ExecuteCallback
 
 import com.arthenica.mobileffmpeg.FFmpeg
 
@@ -51,7 +46,7 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
         button_share.setOnClickListener {
             fileToShare?.let { it1 -> shareVideo(it1) }
         }
-        val post: PostModel? = arguments?.getParcelable<PostModel>("post")
+        val post: Post? = arguments?.getParcelable<Post>("post")
 
         if (post != null) {
             println("Post Url: ${post.recording_details.recording_url}")

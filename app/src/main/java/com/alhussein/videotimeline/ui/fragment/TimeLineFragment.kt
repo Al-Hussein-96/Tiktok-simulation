@@ -1,39 +1,30 @@
 package com.alhussein.videotimeline.ui.fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.adapter.PostsAdapter
-import com.alhussein.videotimeline.download.DownloadResult
-import com.alhussein.videotimeline.download.downloadFile
-import com.alhussein.videotimeline.model.PostModel
-import com.alhussein.videotimeline.model.ResultData
+import com.alhussein.videotimeline.model.Post
+import com.alhussein.videotimeline.intent.MainIntent
+import com.alhussein.videotimeline.viewmodel.MainViewModel
+import com.alhussein.videotimeline.viewstate.MainState
 import com.alhussein.videotimeline.utils.Constants
-import com.alhussein.videotimeline.viewmodel.TimeLineViewModel
 import com.alhussein.videotimeline.work.PreCachingService
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.fragment_time_line.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
-    private val timeLineViewModel by activityViewModels<TimeLineViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     private lateinit var postsPagerAdapter: PostsAdapter
 
@@ -41,28 +32,55 @@ class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val postsData = timeLineViewModel.getDataList()
+
+        lifecycleScope.launch {
+            mainViewModel.postIntent.send(MainIntent.FetchPosts)
+        }
 
 
-        postsData.observe(viewLifecycleOwner, Observer { value ->
-            when (value) {
-                is ResultData.Loading -> {
-                }
-                is ResultData.Success -> {
-                    if (!value.data.isNullOrEmpty()) {
-                        val dataList = value.data
-                        postsPagerAdapter = PostsAdapter(this, dataList)
-                        view_pager_posts.adapter = postsPagerAdapter
-
-                        startPreCaching(dataList)
-                    }
-                }
-            }
-        })
+//        postsData.observe(viewLifecycleOwner, Observer { value ->
+//            when (value) {
+//                is ResultData.Loading -> {
+//                }
+//                is ResultData.Success -> {
+//                    if (!value.data.isNullOrEmpty()) {
+//                        val dataList = value.data
+//                        postsPagerAdapter = PostsAdapter(this, dataList)
+//                        view_pager_posts.adapter = postsPagerAdapter
+//
+//                        startPreCaching(dataList)
+//                    }
+//                }
+//            }
+//        })
+        observerViewModel()
 
     }
 
-    private fun startPreCaching(dataList: ArrayList<PostModel>) {
+    private fun observerViewModel() {
+        lifecycleScope.launch {
+            mainViewModel.state.collect {
+                when (it) {
+                    is MainState.Idle -> {
+
+                    }
+                    is MainState.Loading -> {
+                        // TODO show loading for data
+                    }
+                    is MainState.Posts -> {
+                        postsPagerAdapter =
+                            it.posts?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
+                        view_pager_posts.adapter = postsPagerAdapter
+                        startPreCaching(it.posts)
+
+                    }
+
+                }
+            }
+        }
+    }
+
+    private fun startPreCaching(dataList: List<Post>) {
         val urlList = arrayOfNulls<String>(dataList.size)
         dataList.mapIndexed { index, storiesDataModel ->
             urlList[index] =
@@ -74,7 +92,6 @@ class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
         WorkManager.getInstance(requireContext())
             .enqueue(preCachingWork)
     }
-
 
 
 }

@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.alhussein.videotimeline.App
 import com.alhussein.videotimeline.R
-import com.alhussein.videotimeline.model.PostModel
+import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.utils.Constants
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
 class PostFragment : Fragment(R.layout.fragment_post) {
     private var postUrl: String? = null
-    private var postsDataModel: PostModel? = null
+    private var postsData: Post? = null
     private var exoPlayer: ExoPlayer? = null
     private val simpleCache = App.simpleCache
 
@@ -41,7 +41,7 @@ class PostFragment : Fragment(R.layout.fragment_post) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        postsDataModel = arguments?.getParcelable(Constants.KEY_POST_DATA)
+        postsData = arguments?.getParcelable(Constants.KEY_POST_DATA)
         setData()
     }
 
@@ -74,14 +74,14 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         val simplePlayer = getPlayer()
         player_view_post.player = simplePlayer
 
-        postUrl = postsDataModel?.recording_details?.streaming_hls
+        postUrl = postsData?.recording_details?.streaming_hls
         postUrl?.let { prepareMedia(it) }
 
 
 
         image_view_option_share.setOnClickListener {
 
-            val bundle = bundleOf("post" to postsDataModel)
+            val bundle = bundleOf("post" to postsData)
 
             it.findNavController().navigate(R.id.action_timeLineFragment_to_trimFragment, bundle)
 
@@ -181,9 +181,9 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     companion object {
 
         @JvmStatic
-        fun newInstance(postModel: PostModel) = PostFragment().apply {
+        fun newInstance(post: Post) = PostFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(Constants.KEY_POST_DATA, postModel)
+                putParcelable(Constants.KEY_POST_DATA, post)
             }
         }
     }

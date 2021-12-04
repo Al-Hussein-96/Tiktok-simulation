@@ -3,6 +3,7 @@ package com.alhussein.videotimeline.download
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
@@ -15,7 +16,7 @@ import kotlin.math.roundToInt
 suspend fun HttpClient.downloadFile(file: OutputStream, url: String): Flow<DownloadResult> {
     return flow {
         try {
-            val response = call {
+            val response = this@downloadFile.request<HttpResponse> {
                 url(url)
                 method = HttpMethod.Get
             }.response
