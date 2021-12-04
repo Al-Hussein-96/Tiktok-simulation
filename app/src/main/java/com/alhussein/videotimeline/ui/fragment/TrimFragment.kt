@@ -15,11 +15,7 @@ import com.alhussein.videotimeline.model.Post
 import com.bumptech.glide.Glide
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import kotlinx.android.synthetic.main.fragment_trim.*
 
@@ -28,6 +24,7 @@ import com.arthenica.mobileffmpeg.Config.RETURN_CODE_CANCEL
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS
 
 import com.arthenica.mobileffmpeg.FFmpeg
+import kotlinx.coroutines.*
 
 
 class TrimFragment : BaseFragment(R.layout.fragment_trim) {
@@ -89,10 +86,12 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
                 file
             )
         }
+
         context?.let { downloadFile(it, url, uri) }
     }
 
 
+    @ExperimentalCoroutinesApi
     private fun downloadFile(context: Context, url: String, file: Uri) {
         val ktor = HttpClient(Android)
 
