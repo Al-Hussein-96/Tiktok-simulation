@@ -8,12 +8,27 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--    <com.waynell.videorangeslider.RangeSlider-->
+    <!--        app:lineHeight="3dp"-->
+    <!--        app:lineColor="@color/colorAccent"-->
+    <!--        app:thumbWidth="@dimen/range_thumb_width"-->
+    <!--        app:tickCount="100"-->
+    <!--        app:leftThumbIndex="10"-->
+    <!--        app:leftThumbDrawable="@drawable/thumb_drawable"-->
+    <!--        app:rightThumbDrawable="@drawable/thumb_drawable"-->
+    <!--        android:id="@+id/range_slider"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="66dp"/>-->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_share"
@@ -24,8 +39,7 @@
 
         app:layout_constraintBottom_toTopOf="@id/download_progress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/videoView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/download_progress"
@@ -34,7 +48,6 @@
         android:layout_margin="10dp"
         android:text="@string/download_progress"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/button_share"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
