@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import androidx.core.content.FileProvider
 import com.alhussein.videotimeline.BuildConfig
@@ -41,6 +42,9 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
         super.onViewCreated(view, savedInstanceState)
 
         button_share.setOnClickListener {
+            trimVideo(2, 5)
+        }
+        button_share_only.setOnClickListener {
             fileToShare?.let { it1 -> shareVideo(it1) }
         }
         val post: Post? = arguments?.getParcelable<Post>("post")
@@ -106,6 +110,8 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
 
                                 }
                                 button_share.isEnabled = true
+                                button_share_only.isEnabled = true
+                                setRangeSlider()
                                 viewFile(file)
 
                             }
@@ -126,12 +132,19 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
         }
     }
 
+    private fun setRangeSlider() {
+
+
+//        range_slider.valueFrom()
+    }
+
     private fun viewFile(uri: Uri) {
         let {
 //            videoView.setVideoURI(uri)
 //            videoView.start()
-            trimVideo(2, 5)
+//            trimVideo(2, 5)
         }
+
     }
 
     private fun trimVideo(start: Int, end: Int) {
@@ -155,7 +168,7 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
                 command
             ) { executionId, returnCode ->
                 if (returnCode == RETURN_CODE_SUCCESS) {
-//                    onCutFinish()
+                    shareTrimmedVideo(outFile)
                     println("Hello World")
                 } else if (returnCode == RETURN_CODE_CANCEL) {
                 } else {
@@ -164,6 +177,18 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
         } catch (e: java.lang.Exception) {
         }
         return
+    }
+
+    private fun shareTrimmedVideo(outFile: File) {
+
+        val uri = let {
+            FileProvider.getUriForFile(
+                requireContext(),
+                "${BuildConfig.APPLICATION_ID}.provider",
+                outFile
+            )
+        }
+        shareVideo(uri)
     }
 
 

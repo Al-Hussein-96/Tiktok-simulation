@@ -17,7 +17,7 @@ import kotlin.math.roundToInt
 
 @ExperimentalCoroutinesApi
 suspend fun HttpClient.downloadFile(file: OutputStream, url: String): Flow<DownloadResult> {
-    return callbackFlow {
+    return channelFlow {
 
         try {
             val client = HttpClient(Android)

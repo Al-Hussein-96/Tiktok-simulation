@@ -5,4 +5,5 @@
     <string name="share">Share</string>
     <string name="trim_share"><![CDATA[Trim & share]]></string>
     <string name="download_progress">download progress</string>
+    <string name="share_orginal">Share orginal</string>
 </resources>
