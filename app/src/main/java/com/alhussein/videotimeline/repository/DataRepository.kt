@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class DataRepository @Inject constructor(private val postService: PostService,private val mock: Mock) {
     suspend fun getPostsData(): List<Post> {
-        return mock.loadMockData()
+        return postService.getPosts()
     }
 }

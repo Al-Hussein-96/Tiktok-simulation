@@ -63,7 +63,6 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
                 .into(image_view);
         }
 
-
     }
 
 
@@ -115,7 +114,9 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
 
                             }
                             is DownloadResult.Progress -> {
-                                download_progress.text = "Downloading ${it.progress}"
+                                if (download_progress != null) {
+                                    download_progress!!.text = "Downloading ${it.progress}"
+                                }
                             }
                         }
                     }
@@ -129,7 +130,7 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
         let {
 //            videoView.setVideoURI(uri)
 //            videoView.start()
-            trimVideo(2,5)
+            trimVideo(2, 5)
         }
     }
 

@@ -18,17 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--    <com.waynell.videorangeslider.RangeSlider-->
-    <!--        app:lineHeight="3dp"-->
-    <!--        app:lineColor="@color/colorAccent"-->
-    <!--        app:thumbWidth="@dimen/range_thumb_width"-->
-    <!--        app:tickCount="100"-->
-    <!--        app:leftThumbIndex="10"-->
-    <!--        app:leftThumbDrawable="@drawable/thumb_drawable"-->
-    <!--        app:rightThumbDrawable="@drawable/thumb_drawable"-->
-    <!--        android:id="@+id/range_slider"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="66dp"/>-->
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_share"

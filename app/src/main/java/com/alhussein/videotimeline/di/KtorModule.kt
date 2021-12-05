@@ -9,6 +9,7 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import javax.inject.Singleton
@@ -28,6 +29,7 @@ class KtorModule {
                 ignoreUnknownKeys = true
             })
         }
+        install(Logging)
         defaultRequest {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
