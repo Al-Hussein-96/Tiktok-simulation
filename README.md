@@ -7,6 +7,7 @@ This is a demo app (Assessment) built using kotlin for display videos from apis 
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack) - Dependency injection library for Android.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
+- [Kotlin Flow](https://developer.android.com/kotlin/flow) - For receiving data.
 - [Ktor](https://ktor.io/docs/welcome.html) - an asynchronous framework for creating microservices, web applications and more. Written in Kotlin from the ground up..
 - [Simple MVI Android Architecture](https://github.com/arkivanov/MVIKotlin) .
   - [MainIntent]
