@@ -25,16 +25,16 @@ This is a demo app (Assessment) built using kotlin for display videos from apis 
 This app uses [***Simple MVI (Model View Intent)***](https://github.com/arkivanov/MVIKotlin) architecture.
 
 ## Problems & Improvement
-1- Trim Vide with FFmpeg is static range currently.
+  - Trim Vide with FFmpeg is static range currently.
 
 
-2- Improve the way to download video with Ktor for large files with [Streaming data](https://ktor.io/docs/response.html#streaming).
+  - Improve the way to download video with Ktor for large files with [Streaming data](https://ktor.io/docs/response.html#streaming).
 
-3- Improve MVI Architecture. 
+  - Improve MVI Architecture. 
 
-4- Improve design.
+  - Improve design.
 
-5- Cache ExoPlayer videos
+  - Cache ExoPlayer videos
 
 
 
