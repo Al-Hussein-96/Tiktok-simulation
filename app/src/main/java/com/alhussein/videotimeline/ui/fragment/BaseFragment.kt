@@ -14,8 +14,6 @@ open class BaseFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        println("Mohammad")
-
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, windowInsets ->
             v.updatePadding(top = windowInsets.systemWindowInsetTop)

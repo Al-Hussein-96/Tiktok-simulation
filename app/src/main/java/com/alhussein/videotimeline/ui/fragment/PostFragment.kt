@@ -2,12 +2,16 @@ package com.alhussein.videotimeline.ui.fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.alhussein.videotimeline.App
 import com.alhussein.videotimeline.R
+import com.alhussein.videotimeline.databinding.FragmentPostBinding
+import com.alhussein.videotimeline.databinding.FragmentTimeLineBinding
 import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.utils.Constants
 import com.google.android.exoplayer2.ExoPlayer
@@ -19,15 +23,13 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 
 
-
-
-
-
-class PostFragment : Fragment(R.layout.fragment_post) {
+class PostFragment : Fragment() {
     private var postUrl: String? = null
     private var postsData: Post? = null
     private var exoPlayer: ExoPlayer? = null
     private val simpleCache = App.simpleCache
+
+    private lateinit var binding: FragmentPostBinding
 
 //    private var cacheDataSourceFactory: CacheDataSourceFactory? = null
 
@@ -37,6 +39,16 @@ class PostFragment : Fragment(R.layout.fragment_post) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentPostBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -144,29 +156,6 @@ class PostFragment : Fragment(R.layout.fragment_post) {
         exoPlayer?.repeatMode = Player.REPEAT_MODE_ONE
         exoPlayer?.playWhenReady = true
 
-//        val dataSourceFactory: DataSource.Factory = Factory()
-//// Create a HLS media source pointing to a playlist uri.
-//// Create a HLS media source pointing to a playlist uri.
-//        val hlsMediaSource: HlsMediaSource = HlsMediaSource.Factory(dataSourceFactory)
-//            .createMediaSource(MediaItem.fromUri(hlsUri))
-//// Create a player instance.
-//// Create a player instance.
-//        val player: ExoPlayer = Builder(context).build()
-//// Set the media source to be played.
-//// Set the media source to be played.
-//        player.setMediaSource(hlsMediaSource)
-//
-//
-//        val mediaSource =
-//
-//            ProgressiveMediaSource.Factory(cacheDataSourceFactory).createMediaSource(uri)
-//
-//        simplePlayer?.prepare(mediaSource, true, true)
-//        simplePlayer?.repeatMode = Player.REPEAT_MODE_ONE
-//        simplePlayer?.playWhenReady = true
-//        simplePlayer?.addListener(playerCallback)
-//
-//        toPlayVideoPosition = -1
     }
 
     private val playerCallback: Player.EventListener? = object : Player.EventListener {

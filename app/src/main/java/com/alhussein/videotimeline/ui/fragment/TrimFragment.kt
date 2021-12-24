@@ -6,10 +6,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.alhussein.videotimeline.BuildConfig
 import com.alhussein.videotimeline.R
+import com.alhussein.videotimeline.databinding.FragmentPostBinding
+import com.alhussein.videotimeline.databinding.FragmentTrimBinding
 import com.alhussein.videotimeline.download.DownloadResult
 import com.alhussein.videotimeline.download.downloadFile
 import com.alhussein.videotimeline.model.Post
@@ -18,7 +23,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import kotlinx.coroutines.flow.collect
 import java.io.File
-import kotlinx.android.synthetic.main.fragment_trim.*
 
 import com.arthenica.mobileffmpeg.Config.RETURN_CODE_CANCEL
 
@@ -28,9 +32,10 @@ import com.arthenica.mobileffmpeg.FFmpeg
 import kotlinx.coroutines.*
 
 
-class TrimFragment : BaseFragment(R.layout.fragment_trim) {
+class TrimFragment : Fragment() {
     private var fileToShare: Uri? = null
 
+    private lateinit var binding: FragmentTrimBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +43,23 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
 
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentTrimBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        button_share.setOnClickListener {
+        binding.buttonShare.setOnClickListener {
             trimVideo(2, 5)
         }
-        button_share_only.setOnClickListener {
+        binding.buttonShareOnly.setOnClickListener {
             fileToShare?.let { it1 -> shareVideo(it1) }
         }
         val post: Post? = arguments?.getParcelable<Post>("post")
@@ -64,7 +79,7 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
                 .with(this)
                 .load(coverImgUrl)
                 .centerCrop()
-                .into(image_view);
+                .into(binding.imageView);
         }
 
     }
@@ -109,8 +124,8 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
                                     fileToShare = file
 
                                 }
-                                button_share.isEnabled = true
-                                button_share_only.isEnabled = true
+                                binding.buttonShare.isEnabled = true
+                                binding.buttonShareOnly.isEnabled = true
                                 setRangeSlider()
                                 viewFile(file)
 
@@ -120,9 +135,7 @@ class TrimFragment : BaseFragment(R.layout.fragment_trim) {
 
                             }
                             is DownloadResult.Progress -> {
-                                if (download_progress != null) {
-                                    download_progress!!.text = "Downloading ${it.progress}"
-                                }
+                                binding.downloadProgress.text = "Downloading ${it.progress}"
                             }
                         }
                     }

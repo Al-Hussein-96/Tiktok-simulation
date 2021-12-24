@@ -18,6 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val repository: DataRepository):ViewModel() {
     val postIntent = Channel<MainIntent>(Channel.UNLIMITED)
+
+
     private val _state = MutableStateFlow<MainState>(MainState.Idle)
     val state: StateFlow<MainState> get() = _state
 

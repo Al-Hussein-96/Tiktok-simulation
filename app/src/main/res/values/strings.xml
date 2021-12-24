@@ -6,4 +6,5 @@
     <string name="trim_share"><![CDATA[Trim & share]]></string>
     <string name="download_progress">download progress</string>
     <string name="share_orginal">Share orginal</string>
+    <string name="btn_time_line_fragment">Timeline</string>
 </resources>

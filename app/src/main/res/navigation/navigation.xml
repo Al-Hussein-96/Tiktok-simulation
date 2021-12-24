@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/timeLineFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/timeLineFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_timeLineFragment_to_trimFragment"
             app:destination="@id/trimFragment" />
+        <action
+            android:id="@+id/action_timeLineFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/trimFragment"
@@ -25,5 +28,14 @@
             android:name="post_url"
             android:defaultValue=""
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.alhussein.videotimeline.ui.fragment.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_timeLineFragment"
+            app:destination="@id/timeLineFragment" />
     </fragment>
 </navigation>

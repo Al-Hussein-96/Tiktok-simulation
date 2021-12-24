@@ -1,7 +1,10 @@
 package com.alhussein.videotimeline.ui.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.work.Data
@@ -9,6 +12,8 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.adapter.PostsAdapter
+import com.alhussein.videotimeline.databinding.FragmentHomeBinding
+import com.alhussein.videotimeline.databinding.FragmentTimeLineBinding
 import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.intent.MainIntent
 import com.alhussein.videotimeline.viewmodel.MainViewModel
@@ -23,10 +28,23 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TimeLineFragment : BaseFragment(R.layout.fragment_time_line) {
+class TimeLineFragment : Fragment() {
     private val mainViewModel by activityViewModels<MainViewModel>()
 
+    private lateinit var binding: FragmentTimeLineBinding
     private lateinit var postsPagerAdapter: PostsAdapter
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        binding = FragmentTimeLineBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
