@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Post(
-    val id: Long,
+    val id: String,
     val media_base_url: String,
     val recording_details: RecordDetails
 ) : Parcelable

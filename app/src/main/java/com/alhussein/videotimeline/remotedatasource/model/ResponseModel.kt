@@ -13,5 +13,5 @@ data class ResponseModel(
     val message: String,
 
     @SerialName("data")
-    val data: JsonObject,
+    val data: DataModel,
 )

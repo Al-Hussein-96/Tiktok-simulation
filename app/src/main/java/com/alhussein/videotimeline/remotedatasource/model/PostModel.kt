@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostModel(
     @SerialName("_id")
-    val id: Long,
+    val id: String,
 
     @SerialName("media_base_url")
     val media_base_url: String,

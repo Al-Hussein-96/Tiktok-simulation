@@ -17,21 +17,11 @@ import kotlin.text.get
 
 class PostServiceImpl @Inject constructor(private val httpClient: HttpClient) : PostService {
     override suspend fun getPosts(): List<Post> {
-        println("PostServiceImpl")
-
         val responseModel: ResponseModel = httpClient.get(EndPoints.POSTS)
 
-
-        // TODO Later use Serialization to decode data instead of Gson
-
-        val gson = Gson()
-        val postType = object : TypeToken<List<Post>>() {}.type
-        val posts: List<Post> = gson.fromJson(responseModel.data["data"].toString(), postType)
-
-        println("posts: " + posts.size)
-
-        return posts
-
+        return responseModel.data.data.map {
+            it.toPost()
+        }
     }
 
 }
