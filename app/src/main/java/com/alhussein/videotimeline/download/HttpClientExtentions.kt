@@ -7,7 +7,10 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.utils.io.*
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
@@ -17,47 +20,39 @@ import kotlin.math.roundToInt
 
 @ExperimentalCoroutinesApi
 suspend fun HttpClient.downloadFile(file: OutputStream, url: String): Flow<DownloadResult> {
-    return channelFlow {
-
+    return callbackFlow {
         try {
             val client = HttpClient(Android)
-            var offset: Long = 0
-
-            val httpResponse: HttpResponse = client.get(url) {
-                onDownload { bytesSentTotal, contentLength ->
-                    println("Received $bytesSentTotal bytes from $contentLength")
-
-
-                    offset += bytesSentTotal
-                    val progress = (bytesSentTotal * 100f / contentLength).roundToInt()
-                    println("progress: $progress")
-                    send(DownloadResult.Progress(progress))
-
-                    println("byteToSent $bytesSentTotal")
-//                    response.close()
-
-
+            client.get<HttpStatement>(url).execute { httpResponse ->
+                val channel: ByteReadChannel = httpResponse.receive()
+                var totalByte:Long = 0
+                while (!channel.isClosedForRead) {
+                    val packet = channel.readRemaining(DEFAULT_BUFFER_SIZE.toLong())
+                    while (!packet.isEmpty) {
+                        val bytes = packet.readBytes()
+                        file.run {
+                            write(bytes)
+                            totalByte += bytes.size
+                        }
+                        val percent: Int =
+                            (totalByte * 100 / httpResponse.contentLength()!!).toInt()
+                        trySend(DownloadResult.Progress(percent))
+                        println("Received ${totalByte} bytes from ${httpResponse.contentLength()}")
+                    }
                 }
-            }
-            if (httpResponse.status.isSuccess()) {
-                withContext(Dispatchers.IO) {
-                    val responseBody: ByteArray = httpResponse.receive()
-
-                    file.run { write(responseBody) }
+                if (httpResponse.status.isSuccess()) {
+                    file.close()
+                    trySend(DownloadResult.Success)
+                } else {
+                    trySend(DownloadResult.Error("File not downloaded"))
                 }
-                send(DownloadResult.Success)
-            } else {
-                send(DownloadResult.Error("File not downloaded"))
+//                println("A file saved to ${file.path}")
             }
-
-
-
         } catch (e: TimeoutCancellationException) {
-            send(DownloadResult.Error("Connection timed out", e))
+            trySend(DownloadResult.Error("Connection timed out"))
         } catch (t: Throwable) {
-            send(DownloadResult.Error("Failed to connect"))
+            trySend(DownloadResult.Error("Failed to connect"))
         }
-
-
+        awaitClose()
     }
 }
