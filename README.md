@@ -9,9 +9,7 @@ This is a demo app (Assessment) built using kotlin for display videos from apis 
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
 - [Kotlin Flow](https://developer.android.com/kotlin/flow) - For receiving data.
 - [Ktor](https://ktor.io/docs/welcome.html) - an asynchronous framework for creating microservices, web applications and more. Written in Kotlin from the ground up..
-- [Simple MVI Android Architecture](https://github.com/arkivanov/MVIKotlin) .
-  - [MainIntent]
-  - [MainState]
+- [MVVM] .
 - [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2) - A library for scrolling content on screen as a Page.
 - [ExoPlayer2](https://github.com/google/ExoPlayer) - A library for playing Audio/Video in much efficient way.
 - [FFmpeg](https://github.com/tanersener/mobile-ffmpeg) - A library for Trimming Video.
@@ -22,15 +20,13 @@ This is a demo app (Assessment) built using kotlin for display videos from apis 
 **Contributed By:** [Mohammad Al-Hussein](https://github.com/Al-Hussein-96)
 
 ## Architecture
-This app uses [***Simple MVI (Model View Intent)***](https://github.com/arkivanov/MVIKotlin) architecture.
+This app uses [***MVVM (Model View ViewModel)***] architecture.
 
 ## Problems & Improvement
   - Trim Vide with FFmpeg is static range currently.
 
 
   - Improve the way to download video with Ktor for large files with [Streaming data](https://ktor.io/docs/response.html#streaming).
-
-  - Improve MVI Architecture. 
 
   - Improve design.
 
