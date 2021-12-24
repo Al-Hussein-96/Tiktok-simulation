@@ -21,8 +21,9 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PostFragment : Fragment() {
     private var postUrl: String? = null
     private var postsData: Post? = null

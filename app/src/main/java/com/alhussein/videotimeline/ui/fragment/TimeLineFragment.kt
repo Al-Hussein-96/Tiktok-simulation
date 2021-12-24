@@ -10,26 +10,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.adapter.PostsAdapter
-import com.alhussein.videotimeline.databinding.FragmentHomeBinding
 import com.alhussein.videotimeline.databinding.FragmentTimeLineBinding
 import com.alhussein.videotimeline.model.Post
-import com.alhussein.videotimeline.intent.MainIntent
-import com.alhussein.videotimeline.viewmodel.MainViewModel
-import com.alhussein.videotimeline.viewstate.MainState
+import com.alhussein.videotimeline.model.ResultData
 import com.alhussein.videotimeline.utils.Constants
+import com.alhussein.videotimeline.viewmodel.TimelineViewModel
 import com.alhussein.videotimeline.work.PreCachingService
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.fragment_time_line.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TimeLineFragment : Fragment() {
-    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val timelineViewModel by activityViewModels<TimelineViewModel>()
 
     private lateinit var binding: FragmentTimeLineBinding
     private lateinit var postsPagerAdapter: PostsAdapter
@@ -49,10 +45,11 @@ class TimeLineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        postsPagerAdapter = PostsAdapter(fragment = this)
+        view_pager_posts.adapter = postsPagerAdapter
 
         lifecycleScope.launch {
-            mainViewModel.postIntent.send(MainIntent.FetchPosts)
+            timelineViewModel.getDataList()
         }
 
 
@@ -71,30 +68,32 @@ class TimeLineFragment : Fragment() {
 //                }
 //            }
 //        })
-        observerViewModel()
+        observerData()
+//        observerLoading()
 
     }
 
-    private fun observerViewModel() {
+    private fun observerData() {
         lifecycleScope.launch {
-            mainViewModel.state.collect {
+            timelineViewModel.getDataList().observe(viewLifecycleOwner, {
                 when (it) {
-                    is MainState.Idle -> {
+                    is ResultData.Loading -> {
+                        binding.progressCircular.visibility = View.VISIBLE
+                    }
+                    is ResultData.Success -> {
+                        binding.progressCircular.visibility = View.GONE
 
-                    }
-                    is MainState.Loading -> {
-                        // TODO show loading for data
-                    }
-                    is MainState.Posts -> {
                         postsPagerAdapter =
-                            it.posts?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
+                            it.data?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
                         view_pager_posts.adapter = postsPagerAdapter
-                        startPreCaching(it.posts)
+                        startPreCaching(it.data)
+                    }
+                    else -> {
 
                     }
-
                 }
-            }
+
+            })
         }
     }
 

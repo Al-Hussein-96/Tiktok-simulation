@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.ui.fragment.PostFragment
 
-class PostsAdapter(fragment: Fragment, private val listData: List<Post> = mutableListOf()) : FragmentStateAdapter(fragment) {
+class PostsAdapter(fragment: Fragment, var listData: List<Post> = mutableListOf()) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
         return listData.size
     }
