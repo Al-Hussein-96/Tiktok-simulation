@@ -48,6 +48,8 @@ dependencies {
     implementation "com.google.android.material:material:$materialVersion"
 
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
     implementation "androidx.appcompat:appcompat-resources:1.4.0"
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
@@ -74,6 +76,10 @@ dependencies {
 
     implementation 'com.arthenica:mobile-ffmpeg-min:4.4.LTS'
 //    implementation 'com.writingminds:FFmpegAndroid:0.3.2'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+
 
 
 

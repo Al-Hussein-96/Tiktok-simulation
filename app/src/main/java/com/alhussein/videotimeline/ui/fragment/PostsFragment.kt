@@ -10,19 +10,25 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.alhussein.videotimeline.R
+import com.alhussein.videotimeline.adapter.PostsListAdapter
 import com.alhussein.videotimeline.databinding.FragmentPostBinding
 import com.alhussein.videotimeline.databinding.PostsFragmentBinding
+import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.state.PostsUiState
 import com.alhussein.videotimeline.viewmodel.PostsViewModel
 import com.alhussein.videotimeline.viewmodel.TimelineViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class PostsFragment : Fragment() {
+class PostsFragment : Fragment(), PostsListAdapter.PostListener {
     private lateinit var binding: PostsFragmentBinding
 
     private val postsViewModel by activityViewModels<PostsViewModel>()
+
+    private var adapter: PostsListAdapter = PostsListAdapter(this)
 
 
     override fun onCreateView(
@@ -30,6 +36,8 @@ class PostsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = PostsFragmentBinding.inflate(inflater, container, false)
+
+        binding.postsRecycleView.adapter = adapter
 
         return binding.root
     }
@@ -45,6 +53,8 @@ class PostsFragment : Fragment() {
                     when (it) {
                         is PostsUiState.Success -> {
                             binding.progressCircular.visibility = View.GONE
+                            binding.shimmerPost.stopShimmer()
+                            showPosts(it.posts)
 
                             println("Success StateFlow ${it.posts.size}")
                         }
@@ -55,6 +65,7 @@ class PostsFragment : Fragment() {
                         }
                         else -> {
                             binding.progressCircular.visibility = View.VISIBLE
+
                         }
                     }
                 }
@@ -62,7 +73,19 @@ class PostsFragment : Fragment() {
         }
     }
 
+    private fun showPosts(posts: List<Post>) {
+        posts.let {
+            adapter.data = it
+        }
+    }
+
     companion object {
         fun newInstance() = PostsFragment()
     }
+
+    override fun onPostClick(id: String) {
+        findNavController().navigate(R.id.action_postsFragment_to_timeLineFragment)
+    }
+
+
 }

@@ -80,6 +80,8 @@ class TrimFragment : Fragment() {
                 .load(coverImgUrl)
                 .centerCrop()
                 .into(binding.imageView);
+
+
         }
 
     }

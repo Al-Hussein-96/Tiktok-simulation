@@ -43,5 +43,8 @@
         <action
             android:id="@+id/action_postsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_postsFragment_to_timeLineFragment"
+            app:destination="@id/timeLineFragment" />
     </fragment>
 </navigation>
