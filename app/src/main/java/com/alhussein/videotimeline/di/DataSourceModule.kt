@@ -7,14 +7,15 @@ import com.alhussein.videotimeline.repository.DataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.components.SingletonComponent
 
 @InstallIn(SingletonComponent::class)
 @Module
-object RepositoryModule {
+class DataSourceModule {
+
+
     @Provides
-    fun providesDataRepository(remoteDataSource: PostRemoteDataSource): DataRepository {
-        return DataRepository(remoteDataSource)
+    fun providesPostsRemoteDataSource(postService: PostService): PostRemoteDataSource {
+        return PostRemoteDataSource(postService)
     }
 }

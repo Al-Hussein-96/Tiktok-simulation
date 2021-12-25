@@ -10,6 +10,8 @@ import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface PostService {
@@ -18,6 +20,8 @@ interface PostService {
 }
 
 class PostServiceImpl @Inject constructor(private val httpClient: HttpClient) : PostService {
+
+
     override suspend fun getPosts(): List<Post> {
         val responseModel: ResponseModel = try {
             httpClient.get(EndPoints.POSTS)
@@ -29,8 +33,6 @@ class PostServiceImpl @Inject constructor(private val httpClient: HttpClient) : 
         return responseModel.data.data.map {
             it.toPost()
         }
-
-
     }
 
 }

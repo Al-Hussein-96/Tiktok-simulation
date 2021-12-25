@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/drawable/circle_thumb.xml" value="0.13802083333333334" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/fragment_home.xml" value="0.2421875" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/fragment_post.xml" value="0.15353260869565216" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/fragment_time_line.xml" value="0.2421875" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/fragment_trim.xml" value="0.2" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/VideoTimeline/app/src/main/res/layout/posts_fragment.xml" value="0.2421875" />
       </map>
     </option>
   </component>

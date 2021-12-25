@@ -49,7 +49,7 @@ class TimeLineFragment : Fragment() {
         view_pager_posts.adapter = postsPagerAdapter
 
         lifecycleScope.launch {
-            timelineViewModel.getDataList()
+//            timelineViewModel.getDataList()
         }
 
 
@@ -75,25 +75,25 @@ class TimeLineFragment : Fragment() {
 
     private fun observerData() {
         lifecycleScope.launch {
-            timelineViewModel.getDataList().observe(viewLifecycleOwner, {
-                when (it) {
-                    is ResultData.Loading -> {
-                        binding.progressCircular.visibility = View.VISIBLE
-                    }
-                    is ResultData.Success -> {
-                        binding.progressCircular.visibility = View.GONE
-
-                        postsPagerAdapter =
-                            it.data?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
-                        view_pager_posts.adapter = postsPagerAdapter
-                        startPreCaching(it.data)
-                    }
-                    else -> {
-
-                    }
-                }
-
-            })
+//            timelineViewModel.getDataList().observe(viewLifecycleOwner, {
+//                when (it) {
+//                    is ResultData.Loading -> {
+//                        binding.progressCircular.visibility = View.VISIBLE
+//                    }
+//                    is ResultData.Success -> {
+//                        binding.progressCircular.visibility = View.GONE
+//
+//                        postsPagerAdapter =
+//                            it.data?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
+//                        view_pager_posts.adapter = postsPagerAdapter
+//                        startPreCaching(it.data)
+//                    }
+//                    else -> {
+//
+//                    }
+//                }
+//
+//            })
         }
     }
 

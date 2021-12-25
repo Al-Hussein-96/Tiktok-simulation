@@ -19,10 +19,10 @@ class TimelineViewModel @Inject constructor(private val dataRepository: DataRepo
     val dataLoading: LiveData<Boolean> = _dataLoading
 
 
-    fun getDataList() : LiveData<ResultData<List<Post>?>> {
-        return flow {
-            emit(ResultData.Loading())
-            emit(ResultData.Success(dataRepository.getPostsData()))
-        }.asLiveData(Dispatchers.IO)
-    }
+//    fun getDataList() : LiveData<ResultData<List<Post>?>> {
+//        return flow {
+//            emit(ResultData.Loading())
+//            emit(ResultData.Success(dataRepository.latestPosts))
+//        }.asLiveData(Dispatchers.IO)
+//    }
 }

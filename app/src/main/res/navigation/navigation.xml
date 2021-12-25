@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_timeLineFragment_to_trimFragment"
             app:destination="@id/trimFragment" />
-        <action
-            android:id="@+id/action_timeLineFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/trimFragment"
@@ -35,7 +32,16 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_timeLineFragment"
-            app:destination="@id/timeLineFragment" />
+            android:id="@+id/action_homeFragment_to_postsFragment"
+            app:destination="@id/postsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.alhussein.videotimeline.ui.fragment.PostsFragment"
+        android:label="posts_fragment"
+        tools:layout="@layout/posts_fragment" >
+        <action
+            android:id="@+id/action_postsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

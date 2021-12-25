@@ -18,7 +18,6 @@ data class PostModel(
 )
 
 fun PostModel.toPost() : Post{
-    print("PostModel")
     return Post(
         id = id,
         media_base_url = media_base_url,

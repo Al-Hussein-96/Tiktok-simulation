@@ -41,7 +41,6 @@ suspend fun HttpClient.downloadFile(file: OutputStream, url: String): Flow<Downl
                     }
                 }
                 if (httpResponse.status.isSuccess()) {
-                    file.close()
                     trySend(DownloadResult.Success)
                 } else {
                     trySend(DownloadResult.Error("File not downloaded"))

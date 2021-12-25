@@ -33,8 +33,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.timeLineFragment.setOnClickListener {
-            it.findNavController().navigate(R.id.action_homeFragment_to_timeLineFragment)
+        binding.postsFragment.setOnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_postsFragment)
         }
 
 
