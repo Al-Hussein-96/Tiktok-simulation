@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -14,6 +16,7 @@ import com.alhussein.videotimeline.adapter.PostsAdapter
 import com.alhussein.videotimeline.databinding.FragmentTimeLineBinding
 import com.alhussein.videotimeline.model.Post
 import com.alhussein.videotimeline.model.ResultData
+import com.alhussein.videotimeline.state.PostsUiState
 import com.alhussein.videotimeline.utils.Constants
 import com.alhussein.videotimeline.viewmodel.TimelineViewModel
 import com.alhussein.videotimeline.work.PreCachingService
@@ -21,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.fragment_time_line.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -48,52 +52,34 @@ class TimeLineFragment : Fragment() {
         postsPagerAdapter = PostsAdapter(fragment = this)
         view_pager_posts.adapter = postsPagerAdapter
 
-        lifecycleScope.launch {
-//            timelineViewModel.getDataList()
-        }
 
 
-//        postsData.observe(viewLifecycleOwner, Observer { value ->
-//            when (value) {
-//                is ResultData.Loading -> {
-//                }
-//                is ResultData.Success -> {
-//                    if (!value.data.isNullOrEmpty()) {
-//                        val dataList = value.data
-//                        postsPagerAdapter = PostsAdapter(this, dataList)
-//                        view_pager_posts.adapter = postsPagerAdapter
-//
-//                        startPreCaching(dataList)
-//                    }
-//                }
-//            }
-//        })
+
         observerData()
-//        observerLoading()
-
     }
 
     private fun observerData() {
-        lifecycleScope.launch {
-//            timelineViewModel.getDataList().observe(viewLifecycleOwner, {
-//                when (it) {
-//                    is ResultData.Loading -> {
-//                        binding.progressCircular.visibility = View.VISIBLE
-//                    }
-//                    is ResultData.Success -> {
-//                        binding.progressCircular.visibility = View.GONE
-//
-//                        postsPagerAdapter =
-//                            it.data?.let { it1 -> PostsAdapter(this@TimeLineFragment, it1) }!!
-//                        view_pager_posts.adapter = postsPagerAdapter
-//                        startPreCaching(it.data)
-//                    }
-//                    else -> {
-//
-//                    }
-//                }
-//
-//            })
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                println("lifeCycleOwner: RESUMED")
+
+                timelineViewModel.uiFlow.collect {
+                    when (it) {
+                        is PostsUiState.Success -> {
+//                            binding.progressCircular.visibility = View.GONE
+//                            binding.progressCircular.visibility = View.VISIBLE
+                            postsPagerAdapter.listData = it.posts
+                        }
+                        is PostsUiState.Error -> {
+
+                        }
+                        else -> {
+//                            binding.progressCircular.visibility = View.VISIBLE
+
+                        }
+                    }
+                }
+            }
         }
     }
 

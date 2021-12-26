@@ -46,7 +46,7 @@ class PostsFragment : Fragment(), PostsListAdapter.PostListener {
         super.onViewCreated(view, savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 println("lifeCycleOwner: RESUMED")
 
                 postsViewModel.uiFlow.collect {
