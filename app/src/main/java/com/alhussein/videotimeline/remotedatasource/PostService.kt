@@ -16,7 +16,6 @@ import javax.inject.Inject
 
 interface PostService {
     suspend fun getPosts(): List<Post>
-
 }
 
 class PostServiceImpl @Inject constructor(private val httpClient: HttpClient) : PostService {
