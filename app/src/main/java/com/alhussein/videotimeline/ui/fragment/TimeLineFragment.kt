@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -26,6 +27,9 @@ import io.ktor.client.engine.android.*
 import kotlinx.android.synthetic.main.fragment_time_line.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.util.*
+import java.util.function.Predicate
 
 @AndroidEntryPoint
 class TimeLineFragment : Fragment() {
@@ -66,21 +70,35 @@ class TimeLineFragment : Fragment() {
                 timelineViewModel.uiFlow.collect {
                     when (it) {
                         is PostsUiState.Success -> {
-//                            binding.progressCircular.visibility = View.GONE
-//                            binding.progressCircular.visibility = View.VISIBLE
+                            binding.progressCircular.visibility = View.GONE
                             postsPagerAdapter.listData = it.posts
+
+                            Timber.i("getIndexOfPost(it.posts): ${getIndexOfPost(it.posts)}")
+
+                            view_pager_posts.currentItem = getIndexOfPost(it.posts)
                         }
                         is PostsUiState.Error -> {
 
                         }
                         else -> {
-//                            binding.progressCircular.visibility = View.VISIBLE
+                            binding.progressCircular.visibility = View.VISIBLE
 
                         }
                     }
                 }
             }
         }
+    }
+
+
+    private fun getIndexOfPost(posts: List<Post>): Int {
+        val safeArgs: TimeLineFragmentArgs by navArgs()
+        val postId = safeArgs.postId
+        return posts.indexOf(getPostsByProperty(posts, postId).get())
+    }
+
+    private fun getPostsByProperty(list: List<Post>, postId: String): Optional<Post> {
+        return list.stream().filter { t -> t.id == postId }.findAny()
     }
 
     private fun startPreCaching(dataList: List<Post>) {

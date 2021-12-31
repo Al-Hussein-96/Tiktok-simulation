@@ -13,6 +13,8 @@
         <action
             android:id="@+id/action_timeLineFragment_to_trimFragment"
             app:destination="@id/trimFragment" />
+
+        <argument android:name="post_id" />
     </fragment>
     <fragment
         android:id="@+id/trimFragment"
@@ -20,7 +22,9 @@
         android:label="fragment_trim"
 
         tools:layout="@layout/fragment_trim">
-        <action android:id="@+id/action_back" app:popUpTo="@id/timeLineFragment" />
+        <action
+            android:id="@+id/action_back"
+            app:popUpTo="@id/timeLineFragment" />
         <argument
             android:name="post_url"
             android:defaultValue=""
@@ -30,7 +34,7 @@
         android:id="@+id/homeFragment"
         android:name="com.alhussein.videotimeline.ui.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_postsFragment"
             app:destination="@id/postsFragment" />
@@ -39,7 +43,7 @@
         android:id="@+id/postsFragment"
         android:name="com.alhussein.videotimeline.ui.fragment.PostsFragment"
         android:label="posts_fragment"
-        tools:layout="@layout/posts_fragment" >
+        tools:layout="@layout/posts_fragment">
         <action
             android:id="@+id/action_postsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

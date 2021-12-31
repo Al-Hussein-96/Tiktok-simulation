@@ -18,13 +18,15 @@ class TimelineViewModel @Inject constructor(private val dataRepository: DataRepo
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _uiFlow = MutableStateFlow<PostsUiState>(PostsUiState.Success(emptyList()))
+    private val _uiFlow = MutableStateFlow<PostsUiState>(PostsUiState.Loading)
     val uiFlow: StateFlow<PostsUiState> = _uiFlow
 
     init {
 
         viewModelScope.launch {
-            _uiFlow.value = PostsUiState.Success(dataRepository.latestPostsCache)
+            dataRepository.latestPosts.collect {
+                _uiFlow.value = PostsUiState.Success(it)
+            }
         }
     }
 

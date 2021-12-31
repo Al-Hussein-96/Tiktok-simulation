@@ -11,7 +11,9 @@ class PostsAdapter(fragment: Fragment, var listData: List<Post> = mutableListOf(
     }
 
     override fun createFragment(position: Int): Fragment {
+
         return PostFragment.newInstance(listData[position])
     }
+
 
 }

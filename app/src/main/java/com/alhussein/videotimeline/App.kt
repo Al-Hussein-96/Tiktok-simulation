@@ -8,9 +8,10 @@ import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
-class App: Application() {
+class App : Application() {
 
     companion object {
         var simpleCache: SimpleCache? = null
@@ -27,6 +28,9 @@ class App: Application() {
         if (simpleCache == null) {
             simpleCache = SimpleCache(cacheDir, leastRecentlyUsedCacheEvictor, databaseProvider)
         }
+
+
+        Timber.plant(Timber.DebugTree())
 
 
     }

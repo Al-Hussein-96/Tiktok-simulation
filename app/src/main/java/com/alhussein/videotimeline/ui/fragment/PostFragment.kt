@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {
@@ -69,7 +70,6 @@ class PostFragment : Fragment() {
         exoPlayer = context?.let { ExoPlayer.Builder(it).build() }
 
 
-
 //        cacheDataSourceFactory = CacheDataSourceFactory(
 //            simpleCache,
 //            DefaultHttpDataSourceFactory(
@@ -106,6 +106,7 @@ class PostFragment : Fragment() {
 
 
     override fun onPause() {
+        Timber.i("onPause: ${postsData?.id}")
         pauseVideo()
         super.onPause()
     }
@@ -116,6 +117,7 @@ class PostFragment : Fragment() {
     }
 
     override fun onDestroy() {
+        Timber.i("onDestroyed: ${postsData?.id}")
         releasePlayer()
         super.onDestroy()
     }
@@ -134,13 +136,13 @@ class PostFragment : Fragment() {
     }
 
     private fun releasePlayer() {
-        exoPlayer?.stop(true)
+        exoPlayer?.stop()
         exoPlayer?.release()
     }
 
     private fun prepareMedia(linkUrl: String) {
-//        logError("prepareMedia linkUrl: $linkUrl")
 
+        Timber.i("prepareMedia: ${linkUrl}")
         val uri = Uri.parse(linkUrl)
 
 

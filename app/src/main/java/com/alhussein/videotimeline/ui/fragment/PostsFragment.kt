@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.adapter.PostsListAdapter
 import com.alhussein.videotimeline.databinding.FragmentPostBinding
@@ -84,7 +85,8 @@ class PostsFragment : Fragment(), PostsListAdapter.PostListener {
     }
 
     override fun onPostClick(id: String) {
-        findNavController().navigate(R.id.action_postsFragment_to_timeLineFragment)
+        val action = PostsFragmentDirections.actionPostsFragmentToTimeLineFragment(id)
+        findNavController().navigate(action)
     }
 
 
