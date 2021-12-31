@@ -1,4 +1,4 @@
-package com.alhussein.videotimeline.remotedatasource
+package com.alhussein.videotimeline.data.remote
 
 object EndPoints {
     private const val BASE_URL = "http://assesment.shaadoow.com"

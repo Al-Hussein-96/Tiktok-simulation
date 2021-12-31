@@ -1,4 +1,4 @@
-package com.alhussein.videotimeline.remotedatasource.model
+package com.alhussein.videotimeline.data.remote.model
 
 import com.alhussein.videotimeline.model.RecordDetails
 import kotlinx.serialization.SerialName

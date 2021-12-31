@@ -3,8 +3,8 @@ package com.alhussein.videotimeline.mock
 import android.content.Context
 import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.model.Post
-import com.alhussein.videotimeline.remotedatasource.model.PostModel
-import com.alhussein.videotimeline.remotedatasource.model.toPost
+import com.alhussein.videotimeline.data.remote.model.PostModel
+import com.alhussein.videotimeline.data.remote.model.toPost
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

@@ -1,17 +1,11 @@
-package com.alhussein.videotimeline.remotedatasource
+package com.alhussein.videotimeline.data.remote
 
 import com.alhussein.videotimeline.model.Post
-import com.alhussein.videotimeline.remotedatasource.model.ResponseModel
-import com.alhussein.videotimeline.remotedatasource.model.toPost
-import dagger.Binds
+import com.alhussein.videotimeline.data.remote.model.ResponseModel
+import com.alhussein.videotimeline.data.remote.model.toPost
 import io.ktor.client.*
-import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface PostService {

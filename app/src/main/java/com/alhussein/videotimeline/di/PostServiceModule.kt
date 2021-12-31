@@ -1,7 +1,7 @@
 package com.alhussein.videotimeline.di
 
-import com.alhussein.videotimeline.remotedatasource.PostService
-import com.alhussein.videotimeline.remotedatasource.PostServiceImpl
+import com.alhussein.videotimeline.data.remote.PostService
+import com.alhussein.videotimeline.data.remote.PostServiceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,11 +1,8 @@
-package com.alhussein.videotimeline.repository
+package com.alhussein.videotimeline.data.repository
 
-import com.alhussein.videotimeline.datasource.PostRemoteDataSource
-import com.alhussein.videotimeline.mock.Mock
+import com.alhussein.videotimeline.data.datasource.PostRemoteDataSource
 import com.alhussein.videotimeline.model.Post
-import com.alhussein.videotimeline.remotedatasource.PostService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

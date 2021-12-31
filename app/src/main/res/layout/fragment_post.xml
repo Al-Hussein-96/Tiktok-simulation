@@ -6,6 +6,7 @@
     tools:context=".ui.fragment.PostFragment">
 
     <include
+        android:id="@+id/postLayout"
         layout="@layout/layout_post_view"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

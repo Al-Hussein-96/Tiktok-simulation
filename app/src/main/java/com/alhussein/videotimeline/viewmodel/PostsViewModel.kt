@@ -1,10 +1,8 @@
 package com.alhussein.videotimeline.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alhussein.videotimeline.repository.DataRepository
+import com.alhussein.videotimeline.data.repository.DataRepository
 import com.alhussein.videotimeline.state.PostsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
