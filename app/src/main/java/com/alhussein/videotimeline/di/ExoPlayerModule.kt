@@ -9,8 +9,10 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import timber.log.Timber
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -20,6 +22,8 @@ class ExoPlayerModule {
     @Provides
     fun providesExoPlayer(@ApplicationContext context: Context): ExoPlayer {
         val exoPlayer = ExoPlayer.Builder(context).build()
+
+        Timber.i("providesExoPlayer")
 
         exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
         exoPlayer.playWhenReady = true
