@@ -4,6 +4,7 @@ import android.net.Uri
 import com.alhussein.videotimeline.data.datasource.ExoPlayerDataSource
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
@@ -40,7 +41,7 @@ class ExoPlayerRepository @Inject constructor(private val exoPlayerDataSource: E
         exoPlayerDataSource.restart()
     }
 
-    fun bindPlayer(playerView: StyledPlayerView) {
+    fun bindPlayer(playerView: PlayerView) {
         exoPlayerDataSource.bindPlayer(playerView)
     }
 

@@ -15,11 +15,11 @@ import com.alhussein.videotimeline.R
 import com.alhussein.videotimeline.databinding.FragmentPostBinding
 import com.alhussein.videotimeline.databinding.FragmentTimeLineBinding
 import com.alhussein.videotimeline.model.Post
+import com.alhussein.videotimeline.ui.exoplayer.Player
 import com.alhussein.videotimeline.utils.Constants
 import com.alhussein.videotimeline.viewmodel.PostViewModel
 import com.alhussein.videotimeline.viewmodel.TimelineViewModel
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.MediaItem;
@@ -40,6 +40,18 @@ class PostFragment : Fragment() {
 
     private lateinit var binding: FragmentPostBinding
 
+    private val player by lazy {
+        Player(
+            simpleExoplayerView = binding.postLayout.playerViewPost,
+            playBtn = binding.postLayout.imageViewOptionShare,
+            context = requireContext(),
+            url = postUrl,
+            onVideoEnded = {
+                it.restartPlayer()
+            }
+        )
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,23 +66,14 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postsData = arguments?.getParcelable(Constants.KEY_POST_DATA)
-        setData()
+        postUrl = postsData?.recording_details?.streaming_hls
+
+        lifecycle.addObserver(player)
+        player.init()
     }
 
 
     private fun setData() {
-
-
-        postUrl = postsData?.recording_details?.streaming_hls
-        postUrl?.let { prepareMedia(it) }
-
-
-        postViewModel.bindPlayer(binding.postLayout.playerViewPost)
-
-
-
-
-
 
 
         binding.postLayout.imageViewOptionShare.setOnClickListener {
@@ -81,47 +84,6 @@ class PostFragment : Fragment() {
 
 //                downloadWithKtor(postUrl!!)
         }
-
-
-    }
-
-
-    override fun onPause() {
-        Timber.i("onPause: ${postsData?.id}")
-        pauseVideo()
-        super.onPause()
-    }
-
-    override fun onResume() {
-        restartVideo()
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        Timber.i("onDestroyed: ${postsData?.id}")
-        releasePlayer()
-        super.onDestroy()
-    }
-
-    private fun restartVideo() {
-        postViewModel.restart()
-    }
-
-    private fun pauseVideo() {
-        postViewModel.pause()
-    }
-
-    private fun releasePlayer() {
-        postViewModel.release()
-    }
-
-    private fun prepareMedia(linkUrl: String) {
-
-        Timber.i("prepareMedia: $linkUrl")
-        val uri = Uri.parse(linkUrl)
-
-        postViewModel.setMediaSource(uri)
-        postViewModel.prepare()
 
 
     }
