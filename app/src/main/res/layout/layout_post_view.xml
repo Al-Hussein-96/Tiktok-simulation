@@ -21,6 +21,16 @@
         app:use_controller="false" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ic_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@id/player_view_post"
+        app:layout_constraintEnd_toEndOf="@id/player_view_post"
+        app:layout_constraintStart_toStartOf="@id/player_view_post"
+        app:layout_constraintTop_toTopOf="@id/player_view_post" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_view_option_share"
         android:layout_width="35dp"
         android:layout_height="35dp"

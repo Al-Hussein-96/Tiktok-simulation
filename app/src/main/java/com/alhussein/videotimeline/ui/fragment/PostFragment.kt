@@ -43,7 +43,7 @@ class PostFragment : Fragment() {
     private val player by lazy {
         Player(
             simpleExoplayerView = binding.postLayout.playerViewPost,
-            playBtn = binding.postLayout.imageViewOptionShare,
+            playBtn = binding.postLayout.icPlay,
             context = requireContext(),
             url = postUrl,
             onVideoEnded = {
@@ -66,12 +66,22 @@ class PostFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         postsData = arguments?.getParcelable(Constants.KEY_POST_DATA)
-        postUrl = postsData?.recording_details?.streaming_hls
+        postUrl = postsData?.media_base_url + postsData?.recording_details?.recording_url
 
         lifecycle.addObserver(player)
         player.init()
+
+        setData()
     }
 
+    override fun onDetach() {
+        super.onDetach()
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
     private fun setData() {
 

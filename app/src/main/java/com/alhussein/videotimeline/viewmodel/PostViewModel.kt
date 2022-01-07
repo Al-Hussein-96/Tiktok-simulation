@@ -3,6 +3,7 @@ package com.alhussein.videotimeline.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.alhussein.videotimeline.data.repository.ExoPlayerRepository
+import com.alhussein.videotimeline.ui.exoplayer.Player
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import dagger.hilt.android.lifecycle.HiltViewModel

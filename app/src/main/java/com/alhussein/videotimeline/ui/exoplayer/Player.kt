@@ -36,8 +36,11 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.Util
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Player(
+@Singleton
+class Player @Inject constructor(
     private val simpleExoplayerView: PlayerView,
     private val playBtn: ImageView,
     private val context: Context,
@@ -73,8 +76,8 @@ class Player(
         simpleExoplayerView.player = simpleExoPlayer
         simpleExoplayerView.setShutterBackgroundColor(Color.TRANSPARENT)
         simpleExoplayerView.requestFocus()
-        simpleExoPlayer?.playWhenReady = true
-        isPlaying = true
+        simpleExoPlayer?.playWhenReady = false
+        isPlaying = false
         simpleExoPlayer?.prepare()
 //        resumePlayer()
     }
@@ -84,8 +87,9 @@ class Player(
             Timber.d("Resuming player")
             isPlaying = true
             playBtn.visibility = View.GONE
+            simpleExoPlayer?.playWhenReady = true
             simpleExoPlayer?.seekTo(playbackPosition)
-            simpleExoPlayer?.play()
+
         }
     }
 
@@ -94,11 +98,11 @@ class Player(
             isPlaying = false
             playBtn.visibility = View.VISIBLE
             playbackPosition = simpleExoPlayer!!.currentPosition
-            simpleExoPlayer?.pause()
+            simpleExoPlayer?.playWhenReady = false
         }
     }
 
-    private fun stopPlayer() {
+    private fun releasePlayer() {
         if (isCreated) {
             pausePlayer()
             simpleExoPlayer?.release()
@@ -154,17 +158,27 @@ class Player(
 
     override fun onResume(owner: LifecycleOwner) {
         super.onResume(owner)
+        Timber.i("PlayerLifeCycle onResume")
         resumePlayer()
     }
 
     override fun onPause(owner: LifecycleOwner) {
         super.onPause(owner)
+        Timber.i("PlayerLifeCycle onPause")
         pausePlayer()
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        stopPlayer()
+//        stopPlayer()
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        Timber.i("PlayerLifeCycle onDestroy")
+
+        releasePlayer()
+
     }
 
 }
