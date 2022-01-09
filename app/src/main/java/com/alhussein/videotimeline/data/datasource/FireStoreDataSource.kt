@@ -7,6 +7,7 @@ import com.alhussein.videotimeline.state.PostsUiState
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -20,17 +21,39 @@ import javax.inject.Inject
 class FireStoreDataSource @Inject constructor(private val firebaseFirestore: FirebaseFirestore) {
 
     @ExperimentalCoroutinesApi
-    fun getPosts(): Flow<PostsUiState> = callbackFlow {
+    fun getPosts(): Flow<List<Post>> = callbackFlow {
+        Timber.i("FirebaseFirestore: getPosts")
 
-        firebaseFirestore.collection("posts").get().addOnSuccessListener {
-            for (post in it) {
-                Timber.i("FirebaseFirestore: ${post.toString()}")
+        // Reference to use in Firestore
+        var postsCollection: CollectionReference? = null
+        try {
+            postsCollection = FirebaseFirestore.getInstance()
+                .collection("posts")
+        } catch (e: Throwable) {
+            // If Firebase cannot be initialized, close the stream of data
+            // flow consumers will stop collecting and the coroutine will resume
+            close(e)
+        }
+
+        // Registers callback to firestore, which will be called on new events
+        val subscription = postsCollection?.addSnapshotListener { snapshot, _ ->
+            if (snapshot == null) {
+                return@addSnapshotListener
+            }
+            // Sends events to the flow! Consumers will get the new events
+            try {
+                var posts: List<Post> = snapshot.toObjects<Post>()
+                Timber.i("Snapshot ${posts.size}")
+//                trySend(snapshot.getEvents())
+            } catch (e: Throwable) {
+                // Event couldn't be sent to the flow
             }
         }
 
-
-        awaitClose {
-        }
+        // The callback inside awaitClose will be executed when the flow is
+        // either closed or cancelled.
+        // In this case, remove the callback from Firestore
+        awaitClose { subscription?.remove() }
 
 
     }

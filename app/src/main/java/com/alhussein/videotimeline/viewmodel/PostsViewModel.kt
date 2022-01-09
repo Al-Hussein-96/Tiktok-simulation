@@ -6,10 +6,12 @@ import com.alhussein.videotimeline.data.repository.DataRepository
 import com.alhussein.videotimeline.data.repository.FireStoreRepository
 import com.alhussein.videotimeline.state.PostsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class PostsViewModel @Inject constructor(private val fireStoreRepository: FireStoreRepository) : ViewModel() {
     private val _uiFlow = MutableSharedFlow<PostsUiState>(replay = 10)
@@ -18,6 +20,10 @@ class PostsViewModel @Inject constructor(private val fireStoreRepository: FireSt
     init {
 
         viewModelScope.launch {
+            fireStoreRepository.latestPosts.collect {
+                _uiFlow.emit(PostsUiState.Loading)
+                _uiFlow.emit(PostsUiState.Success(it))
+            }
 
 //            dataRepository.latestPosts.collect { latestPosts ->
 //                _uiFlow.emit(PostsUiState.Loading)
